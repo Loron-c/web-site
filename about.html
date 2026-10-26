@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 语言偏好恢复：必须在样式与内容渲染前执行，否则会「先闪英文再变中文」 -->
+  <script>
+    (function () {
+      var L = 'en';
+      try {
+        var v = localStorage.getItem('exceldent-lang');
+        if (v === 'cn' || v === 'en') L = v;
+      } catch (e) { /* file:// 或隐私模式下不可用，保持默认英文 */ }
+      document.documentElement.setAttribute('data-lang', L);
+      document.documentElement.setAttribute('lang', L === 'cn' ? 'zh-CN' : 'en');
+    })();
+  </script>
+  <title>About Us — EXCELDENT Dental Lab</title>
+  <link rel="icon" type="image/png" href="assets/brand/diamond-logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========== Header（与首页一致） ========== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav">
+      <a href="index.html" class="logo" aria-label="EXCELDENT Dental Lab">
+        <span class="logo-mark" aria-hidden="true">
+          <img src="assets/brand/diamond-logo.png" alt="" width="34" height="33" />
+        </span>
+        <span class="logo-text">
+          <span class="logo-name">EXCELDENT</span>
+          <span class="logo-sub" data-en="DENTAL LAB" data-cn="口腔实验室">DENTAL LAB</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html" data-en="Home" data-cn="首页">Home</a>
+        <a href="index.html#about" data-en="About" data-cn="关于">About</a>
+        <a href="index.html#products" data-en="Products" data-cn="产品">Products</a>
+        <a href="index.html#technology" data-en="Technology" data-cn="智造">Technology</a>
+        <a href="index.html#partners" data-en="Partners" data-cn="伙伴">Partners</a>
+        <a href="index.html#culture" data-en="Culture" data-cn="文化">Culture</a>
+        <a href="index.html#contact" data-en="Contact" data-cn="联系">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+          <span class="lang-opt lang-active" data-lang-opt="en">EN</span>
+          <span class="lang-divider">/</span>
+          <span class="lang-opt" data-lang-opt="cn">中</span>
+        </button>
+        <button class="nav-burger" id="nav-burger" type="button" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== 版头（像素切换矩阵：关于我们 ⇄ 公司简介） ========== -->
+    <section class="pd-hero pd-hero--swap">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-grid"></div>
+        <div class="hero-glow hero-glow--blue"></div>
+      </div>
+      <div class="container pd-hero-content">
+        <nav class="pd-crumb" aria-label="Breadcrumb">
+          <a href="index.html" data-en="Home" data-cn="首页">Home</a>
+          <span class="pd-crumb-sep">/</span>
+          <span data-en="About Us" data-cn="关于我们">About Us</span>
+        </nav>
+
+        <div class="pixel-swap pixel-swap--hero" id="about-swap">
+          <div class="pixel-swap__layer" data-visible="true" id="as-layer-1"></div>
+          <div class="pixel-swap__layer" data-visible="false" id="as-layer-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 主营业务（独立板块）：只放大类名与跳转，具体品类见详情页 ========== -->
+    <section class="ab-products">
+      <div class="container">
+        <h2 class="ab-heading" data-en="What We Make" data-cn="主营业务">What We Make</h2>
+        <ul class="ab-lines">
+          <li class="ab-line">
+            <span class="pd-item-num">01</span>
+            <h3 class="pd-item-title" data-en="Fixed Restorations" data-cn="固定修复体">Fixed Restorations</h3>
+            <a class="pd-item-link" href="product.html?line=fixed">
+              <span data-en="View product line" data-cn="查看产品线">View product line</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="ab-line">
+            <span class="pd-item-num">02</span>
+            <h3 class="pd-item-title" data-en="Removable Dentures" data-cn="活动可摘义齿">Removable Dentures</h3>
+            <a class="pd-item-link" href="product.html?line=removable">
+              <span data-en="View product line" data-cn="查看产品线">View product line</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li class="ab-line">
+            <span class="pd-item-num">03</span>
+            <h3 class="pd-item-title" data-en="Orthodontic" data-cn="正畸产品线">Orthodontic</h3>
+            <a class="pd-item-link" href="product.html?line=ortho">
+              <span data-en="View product line" data-cn="查看产品线">View product line</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 公司简介与资质 ========== -->
+    <section class="pd-main">
+      <div class="container">
+
+        <div class="pd-note cn-only" data-en="Note: this page uses only the company facts provided so far. Photos, certificates and the company history timeline are marked as pending." data-cn="说明：本页内容仅使用目前已确认的公司资料。配图、证书与发展历程时间轴均标注为待补充。">说明：本页内容仅使用目前已确认的公司资料。配图、证书与发展历程时间轴均标注为待补充。</div>
+
+        <!-- 资质 -->
+        <h2 class="ab-heading" data-en="Qualifications" data-cn="荣誉资质">Qualifications</h2>
+        <ul class="ab-qual">
+          <li data-en="High-Tech Enterprise" data-cn="高新技术企业">High-Tech Enterprise</li>
+          <li data-en="Specialized & Sophisticated Enterprise" data-cn="专精特新企业">Specialized &amp; Sophisticated Enterprise</li>
+          <li data-en="Innovative Enterprise" data-cn="创新型企业">Innovative Enterprise</li>
+          <li data-en="Dentsply Sirona One-Stop Digital Printing Center" data-cn="登士柏西诺德一站式数字化打印中心">Dentsply Sirona One-Stop Digital Printing Center</li>
+          <li data-en="Digital Aesthetics Center — Strategic Partner" data-cn="数字美学共享中心战略合作伙伴">Digital Aesthetics Center — Strategic Partner</li>
+        </ul>
+        <p class="ab-pending" data-en="Certificate images to be added." data-cn="证书图片待补充。">Certificate images to be added.</p>
+
+      </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="pd-cta">
+      <div class="container">
+        <h2 class="pd-cta-title" data-en="Want to know more?" data-cn="想了解更多？">Want to know more?</h2>
+        <p class="pd-cta-text" data-en="Send us an inquiry — our team will get back to you shortly." data-cn="发送询单，我们的团队会尽快与您联系。">Send us an inquiry — our team will get back to you shortly.</p>
+        <a class="btn btn-primary" href="index.html#contact">
+          <span data-en="Send an Inquiry" data-cn="发送询单">Send an Inquiry</span>
+          <span class="btn-arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== Footer（与首页一致） ========== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-col footer-col--brand">
+          <div class="footer-brand">
+            <span class="logo-mark" aria-hidden="true">
+              <img src="assets/brand/diamond-logo.png" alt="" width="30" height="29" />
+            </span>
+            <div>
+              <div class="footer-name">EXCELDENT</div>
+              <div class="footer-sub" data-en="Dental Lab — Established 2019" data-cn="口腔实验室 — 始于 2019">Dental Lab — Established 2019</div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="footer-col" aria-label="Products">
+          <h4 class="footer-heading" data-en="Products" data-cn="产品">Products</h4>
+          <ul class="footer-links">
+            <li><a href="product.html?line=fixed" data-en="Fixed Restorations" data-cn="固定修复体">Fixed Restorations</a></li>
+            <li><a href="product.html?line=removable" data-en="Removable Dentures" data-cn="活动可摘义齿">Removable Dentures</a></li>
+            <li><a href="product.html?line=ortho" data-en="Orthodontic" data-cn="正畸产品线">Orthodontic</a></li>
+          </ul>
+        </nav>
+
+        <nav class="footer-col" aria-label="Company">
+          <h4 class="footer-heading" data-en="Company" data-cn="关于">Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html" data-en="About Us" data-cn="企业简介">About Us</a></li>
+            <li><a href="index.html#technology" data-en="Technology" data-cn="智造实力">Technology</a></li>
+            <li><a href="index.html#partners" data-en="Partners" data-cn="合作伙伴">Partners</a></li>
+            <li><a href="index.html#culture" data-en="Culture" data-cn="企业文化">Culture</a></li>
+          </ul>
+        </nav>
+
+        <div class="footer-col">
+          <h4 class="footer-heading" data-en="Get in Touch" data-cn="联系我们">Get in Touch</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#contact" data-en="Send an Inquiry" data-cn="发送询单">Send an Inquiry</a></li>
+          </ul>
+          <p class="footer-address" data-en="Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China" data-cn="广东省珠海市金湾区康德莱国际医疗产业园">Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-text" data-en="© 2026 EXCELDENT Dental Technology Development Co., Ltd." data-cn="© 2026 珠海优里卡齿科技术开发有限公司">© 2026 EXCELDENT Dental Technology Development Co., Ltd.</div>
+        <button class="footer-top-btn" id="footer-top-btn" type="button">
+          <span data-en="Back to top" data-cn="返回顶部">Back to top</span>
+          <span class="footer-top-arrow" aria-hidden="true">↑</span>
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="page.js"></script>
+  <script src="pixelswap.js"></script>
+  <script src="about-swap.js"></script>
+  <script>
+    window.SITE.setTitle('About Us — EXCELDENT Dental Lab', '关于我们 — 优里卡齿科');
+  </script>
+</body>
+</html>

@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- 语言偏好恢复：必须在样式与内容渲染前执行，否则会「先闪英文再变中文」 -->
+  <script>
+    (function () {
+      var L = 'en';
+      try {
+        var v = localStorage.getItem('exceldent-lang');
+        if (v === 'cn' || v === 'en') L = v;
+      } catch (e) { /* file:// 或隐私模式下不可用，保持默认英文 */ }
+      document.documentElement.setAttribute('data-lang', L);
+      document.documentElement.setAttribute('lang', L === 'cn' ? 'zh-CN' : 'en');
+    })();
+  </script>
+  <title>EXCELDENT Dental Lab — High-End Custom Dental Prosthetics</title>
+  <meta name="description" content="EXCELDENT Dental Technology Development Co., Ltd. — A high-tech enterprise specializing in high-end custom dental prosthetics for global markets, located in the Kangdelai International Medical Industrial Park, Zhuhai, China." />
+  <!-- favicon：引用站内品牌钻石标识 PNG，无外部请求 -->
+  <link rel="icon" type="image/png" href="assets/brand/diamond-logo.png" />
+  <!-- hero 底图预加载：259 KB，避免首屏背景延迟出现 -->
+  <link rel="preload" as="image" href="assets/video/poster.jpg" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- 首屏骨架：内联样式，不依赖 styles.css，HTML 一解析即可显示 -->
+  <style>
+    #boot {
+      position: fixed; inset: 0; z-index: 9999; background: #0A1F44;
+      display: flex; flex-direction: column;
+      opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility 0s .3s;
+    }
+    #boot.is-on { opacity: 1; visibility: visible; transition: opacity .18s ease; }
+    #boot.done { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .45s ease, visibility 0s .45s; }
+    #boot-bar {
+      position: absolute; top: 0; left: 0; height: 2px; width: 24%;
+      background: #F26B3A; transition: width .7s cubic-bezier(.3, .6, .3, 1);
+    }
+    #boot-in { padding: 104px 24px 0; max-width: 1200px; margin: 0 auto; width: 100%; box-sizing: border-box; }
+    .bk { background: #16325e; border-radius: 6px; position: relative; overflow: hidden; }
+    .bk::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.13), transparent);
+      transform: translateX(-100%); animation: bsw 1.4s infinite;
+    }
+    @keyframes bsw { to { transform: translateX(100%); } }
+    @media (max-width: 640px) { #boot-in { padding: 84px 18px 0; } }
+  </style>
+  <script>
+    (function () {
+      var d = document.documentElement;
+      // 只有 JS 可用时才启用「隐藏后淡入」的入场动画；JS 挂了内容依旧可见
+      d.classList.add('js-anim');
+      window.__animReady = false;
+      // 延迟门槛：秒开时骨架根本不出现，避免闪一下反而更糟
+      setTimeout(function () {
+        if (window.__animReady) return;
+        var b = document.getElementById('boot');
+        if (b) { b.classList.add('is-on'); }
+      }, 300);
+      // 兜底：GSAP / app.js 迟迟没跑完 → 强制显示内容，页面不再空白
+      setTimeout(function () {
+        if (window.__animReady) return;
+        d.classList.remove('js-anim');
+        var b = document.getElementById('boot');
+        if (b) b.classList.add('done');
+      }, 2500);
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- ========== 首屏加载骨架 ========== -->
+  <div id="boot" aria-hidden="true">
+    <div id="boot-bar"></div>
+    <div id="boot-in">
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:56px">
+        <div class="bk" style="width:32px;height:32px;border-radius:8px"></div>
+        <div class="bk" style="width:112px;height:12px"></div>
+      </div>
+      <div class="bk" style="width:min(560px,82%);height:46px;margin-bottom:14px"></div>
+      <div class="bk" style="width:min(380px,58%);height:46px;margin-bottom:30px"></div>
+      <div class="bk" style="width:min(640px,92%);height:12px;margin-bottom:11px"></div>
+      <div class="bk" style="width:min(500px,70%);height:12px;margin-bottom:42px"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div class="bk" style="width:156px;height:50px;border-radius:25px"></div>
+        <div class="bk" style="width:132px;height:50px;border-radius:25px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== Header / Navigation ========== -->
+  <header class="site-header" id="site-header">
+    <div class="container nav">
+      <a href="#home" class="logo" aria-label="EXCELDENT Dental Lab">
+        <span class="logo-mark" aria-hidden="true">
+          <img src="assets/brand/diamond-logo.png" alt="" width="34" height="33" />
+        </span>
+        <span class="logo-text">
+          <span class="logo-name">EXCELDENT</span>
+          <span class="logo-sub" data-en="DENTAL LAB" data-cn="口腔实验室">DENTAL LAB</span>
+        </span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#home" data-en="Home" data-cn="首页">Home</a>
+        <a href="#about" data-en="About" data-cn="关于">About</a>
+        <a href="#products" data-en="Products" data-cn="产品">Products</a>
+        <a href="#technology" data-en="Technology" data-cn="智造">Technology</a>
+        <a href="#partners" data-en="Partners" data-cn="伙伴">Partners</a>
+        <a href="#culture" data-en="Culture" data-cn="文化">Culture</a>
+        <a href="#contact" data-en="Contact" data-cn="联系">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+          <span class="lang-opt lang-active" data-lang-opt="en">EN</span>
+          <span class="lang-divider">/</span>
+          <span class="lang-opt" data-lang-opt="cn">中</span>
+        </button>
+        <button class="nav-burger" id="nav-burger" type="button" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== 01 · Hero ========== -->
+    <section class="hero" id="home">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-photo"></div>
+        <div class="hero-veil"></div>
+        <div class="hero-glow hero-glow--orange"></div>
+        <div class="hero-glow hero-glow--blue"></div>
+      </div>
+
+      <div class="container hero-content">
+        <div class="hero-eyebrow reveal">
+          <span class="hero-eyebrow-dot"></span>
+          <span data-en="EXCELDENT DENTAL LAB · EST. 2019" data-cn="优里卡齿科 · 始于 2019">EXCELDENT DENTAL LAB · EST. 2019</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="reveal-line" data-en="Crafting Smiles," data-cn="匠心义齿，">Crafting Smiles,</span>
+          <span class="reveal-line hero-title-accent" data-en="Defining Standards." data-cn="树立标杆。">Defining Standards.</span>
+        </h1>
+
+        <p class="hero-lede reveal" data-en="Driving innovation in the dental industry, setting new benchmarks for quality, and bringing confidence and beautiful smiles to people worldwide." data-cn="以创新推动口腔行业发展，以品质树立行业新标杆，为人类带来自信与美丽笑容。">Driving innovation in the dental industry, setting new benchmarks for quality, and bringing confidence and beautiful smiles to people worldwide.</p>
+
+        <div class="hero-ctas reveal">
+          <a href="#products" class="btn btn-primary">
+            <span data-en="Explore Capabilities" data-cn="了解能力">Explore Capabilities</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#contact" class="btn btn-ghost" data-en="Get in Touch" data-cn="联系我们">Get in Touch</a>
+        </div>
+
+        <div class="hero-meta reveal">
+          <div class="hero-meta-item">
+            <span class="hero-meta-num">2019</span>
+            <span class="hero-meta-label" data-en="Founded" data-cn="成立">Founded</span>
+          </div>
+          <span class="hero-meta-divider" aria-hidden="true"></span>
+          <div class="hero-meta-item">
+            <span class="hero-meta-num">10,000+</span>
+            <span class="hero-meta-label" data-en="㎡ Facility" data-cn="平方米厂房">㎡ Facility</span>
+          </div>
+          <span class="hero-meta-divider" aria-hidden="true"></span>
+          <div class="hero-meta-item">
+            <span class="hero-meta-num">800+</span>
+            <span class="hero-meta-label" data-en="Professionals" data-cn="专业人才">Professionals</span>
+          </div>
+        </div>
+      </div>
+
+      <a href="#stats" class="scroll-cue" aria-label="Scroll to next section">
+        <span data-en="SCROLL" data-cn="向下">SCROLL</span>
+        <span class="scroll-cue-line"></span>
+      </a>
+    </section>
+
+    <!-- ========== 02 · Stats / Numbers ========== -->
+    <section class="stats" id="stats">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-en="SCALE & REACH" data-cn="规模与触达">SCALE & REACH</span>
+          <h2 class="section-title" data-en="Numbers that speak." data-cn="数字说明一切。">Numbers that speak.</h2>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-num"><span class="counter" data-target="2019">0</span></div>
+            <div class="stat-label" data-en="Year Founded" data-cn="成立年份">Year Founded</div>
+            <div class="stat-sub" data-en="In the Greater Bay Area" data-cn="扎根粤港澳大湾区">In the Greater Bay Area</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num"><span class="counter" data-target="10000" data-suffix="+">0</span></div>
+            <div class="stat-label" data-en="㎡ Smart Facility" data-cn="平方米智能厂房">㎡ Smart Facility</div>
+            <div class="stat-sub" data-en="Lights-out production lines" data-cn="黑灯工厂生产线">Lights-out production lines</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num"><span class="counter" data-target="800" data-suffix="+">0</span></div>
+            <div class="stat-label" data-en="Professionals" data-cn="专业人才">Professionals</div>
+            <div class="stat-sub" data-en="Engineers, technicians, designers" data-cn="工程师、技术员、设计师">Engineers, technicians, designers</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-num"><span class="counter" data-target="30" data-suffix="+">0</span></div>
+            <div class="stat-label" data-en="Countries Served" data-cn="服务国家">Countries Served</div>
+            <div class="stat-sub" data-en="USA · Europe · Worldwide" data-cn="美国、欧洲及全球">USA · Europe · Worldwide</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 03 · About / Three Pillars ========== -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="section-head section-head--left">
+          <span class="section-eyebrow" data-en="WHY EXCELDENT" data-cn="为什么选择优里卡">WHY EXCELDENT</span>
+          <h2 class="section-title" data-en="Built on three pillars of excellence." data-cn="三大支柱，铸就卓越。">Built on three pillars of excellence.</h2>
+          <p class="section-lede" data-en="We are a high-tech enterprise at the forefront of global digital dentistry, committed to smart manufacturing of digital dental prosthetics." data-cn="作为一家高新技术企业，我们紧跟全球口腔数字化发展步伐，专注于数字化义齿智能制造方向。">We are a high-tech enterprise at the forefront of global digital dentistry, committed to smart manufacturing of digital dental prosthetics.</p>
+        </div>
+
+        <div class="pillars">
+          <article class="pillar">
+            <div class="pillar-num">01</div>
+            <h3 class="pillar-title" data-en="Scale & Capacity" data-cn="规模与产能">Scale & Capacity</h3>
+            <p class="pillar-text" data-en="A 10,000+ ㎡ facility housing 800+ professionals, equipped for high-volume, lights-out production without compromise on craftsmanship." data-cn="10,000+ 平方米的智能厂房，800+ 专业人才团队，配备黑灯自动化生产线，规模化交付的同时不牺牲工艺精度。">A 10,000+ ㎡ facility housing 800+ professionals, equipped for high-volume, lights-out production without compromise on craftsmanship.</p>
+            <ul class="pillar-tags">
+              <li data-en="Smart Factory" data-cn="智能工厂">Smart Factory</li>
+              <li data-en="High Volume" data-cn="高产能">High Volume</li>
+            </ul>
+          </article>
+
+          <article class="pillar pillar--accent">
+            <div class="pillar-num">02</div>
+            <h3 class="pillar-title" data-en="Digital Innovation" data-cn="数字化创新">Digital Innovation</h3>
+            <p class="pillar-text" data-en="Dentsply Sirona One-Stop Digital Printing Center. From scan to design to print, every step is digitized for accurate, perfectly fitting prosthetics." data-cn="登士柏西诺德一站式数字化打印中心。从扫描、设计到打印，每一步都数字化，确保精准贴合的修复体。">Dentsply Sirona One-Stop Digital Printing Center. From scan to design to print, every step is digitized for accurate, perfectly fitting prosthetics.</p>
+            <ul class="pillar-tags">
+              <li data-en="Dentsply Sirona" data-cn="登士柏西诺德">Dentsply Sirona</li>
+              <li data-en="CAD/CAM" data-cn="CAD/CAM">CAD/CAM</li>
+            </ul>
+          </article>
+
+          <article class="pillar">
+            <div class="pillar-num">03</div>
+            <h3 class="pillar-title" data-en="Global Trust" data-cn="全球信任">Global Trust</h3>
+            <p class="pillar-text" data-en="Recognized as a High-Tech Enterprise, Innovative SME, and Specialized & Sophisticated SME. Trusted by 20+ leading dental brands worldwide." data-cn="国家高新技术企业、专精特新中小企业、创新型中小企业。与全球 20+ 顶级口腔品牌建立深度合作。">Recognized as a High-Tech Enterprise, Innovative SME, and Specialized & Sophisticated SME. Trusted by 20+ leading dental brands worldwide.</p>
+            <ul class="pillar-tags">
+              <li data-en="Certified" data-cn="官方认证">Certified</li>
+              <li data-en="Worldwide" data-cn="全球服务">Worldwide</li>
+            </ul>
+          </article>
+        </div>
+
+        <div class="about-more">
+          <a class="btn btn-primary" href="about.html">
+            <span data-en="Learn more about us" data-cn="了解企业简介">Learn more about us</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 04 · Products & Capabilities ========== -->
+    <section class="products" id="products">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-en="PRODUCT PORTFOLIO" data-cn="产品矩阵">PRODUCT PORTFOLIO</span>
+          <h2 class="section-title" data-en="Three product lines, infinite possibilities." data-cn="三大产品线，无限可能。">Three product lines, infinite possibilities.</h2>
+        </div>
+
+        <div class="product-grid">
+
+          <a class="product-card" id="p-fixed" href="product.html?line=fixed">
+            <div class="product-visual product-visual--1 product-visual--image" aria-hidden="true">
+              <img class="product-img" src="assets/products/fixed.png" alt="" loading="lazy" decoding="async">
+            </div>
+            <div class="product-meta">
+              <h3 class="product-title" data-en="Fixed Restorations" data-cn="固定修复体">Fixed Restorations</h3>
+              <p class="product-text" data-en="High-precision fixed prosthetics designed for long-term performance and natural aesthetics." data-cn="高精度固定修复体，长久耐用，自然美观。">High-precision fixed prosthetics designed for long-term performance and natural aesthetics.</p>
+              <ul class="product-list">
+                <li data-en="Zirconia" data-cn="氧化锆">Zirconia</li>
+                <li data-en="All-Ceramic" data-cn="全瓷">All-Ceramic</li>
+                <li data-en="Metal-Ceramic" data-cn="金属烤瓷">Metal-Ceramic</li>
+                <li data-en="Titanium" data-cn="纯钛">Titanium</li>
+              </ul>
+              <span class="product-more"><span data-en="View product line" data-cn="查看产品线">View product line</span><span class="product-more-arrow" aria-hidden="true">→</span></span>
+            </div>
+          </a>
+
+          <a class="product-card" id="p-removable" href="product.html?line=removable">
+            <div class="product-visual product-visual--2 product-visual--image" aria-hidden="true">
+              <img class="product-img" src="assets/products/removable.png" alt="" loading="lazy" decoding="async">
+            </div>
+            <div class="product-meta">
+              <h3 class="product-title" data-en="Removable Dentures" data-cn="活动可摘义齿">Removable Dentures</h3>
+              <p class="product-text" data-en="Comfortable, precise-fitting removable solutions for partial and full-arch restoration." data-cn="舒适、精准贴合的可摘义齿方案，覆盖局部与全口修复。">Comfortable, precise-fitting removable solutions for partial and full-arch restoration.</p>
+              <ul class="product-list">
+                <li data-en="Acrylic Resin" data-cn="丙烯酸树脂">Acrylic Resin</li>
+                <li data-en="CoCr Alloy" data-cn="钴铬合金">CoCr Alloy</li>
+                <li data-en="Flexible Nylon" data-cn="弹性树脂">Flexible Nylon</li>
+                <li data-en="Ti Bar + Acrylic" data-cn="钛杆 + 树脂">Ti Bar + Acrylic</li>
+              </ul>
+              <span class="product-more"><span data-en="View product line" data-cn="查看产品线">View product line</span><span class="product-more-arrow" aria-hidden="true">→</span></span>
+            </div>
+          </a>
+
+          <a class="product-card" id="p-ortho" href="product.html?line=ortho">
+            <div class="product-visual product-visual--3" aria-hidden="true">
+              <div class="product-glyph"></div>
+            </div>
+            <div class="product-meta">
+              <h3 class="product-title" data-en="Orthodontic" data-cn="正畸产品线">Orthodontic</h3>
+              <p class="product-text" data-en="Modern orthodontic appliances engineered for predictable tooth movement and patient comfort." data-cn="现代正畸产品，可预测的牙齿移动与舒适的佩戴体验。">Modern orthodontic appliances engineered for predictable tooth movement and patient comfort.</p>
+              <ul class="product-list">
+                <li data-en="Thermoplastic" data-cn="热塑性高分子">Thermoplastic</li>
+                <li data-en="Acrylic Resin" data-cn="丙烯酸树脂">Acrylic Resin</li>
+              </ul>
+              <span class="product-more"><span data-en="View product line" data-cn="查看产品线">View product line</span><span class="product-more-arrow" aria-hidden="true">→</span></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 04.5 · Digital Workflow / 工艺流程 ========== -->
+    <section class="process" id="process">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-en="DIGITAL WORKFLOW" data-cn="数字化工艺流程">DIGITAL WORKFLOW</span>
+          <h2 class="section-title" data-en="From scan to smile, in four steps." data-cn="从扫描到笑容，只需四步。">From scan to smile, in four steps.</h2>
+          <p class="section-lede" data-en="Every restoration follows the same digital chain — data in, design, manufacturing, and clinical delivery." data-cn="每一件修复体都走同一条数字化链路——数据采集、设计、加工，直至临床应用。">Every restoration follows the same digital chain — data in, design, manufacturing, and clinical delivery.</p>
+        </div>
+
+        <ol class="process-steps">
+          <li class="process-step">
+            <span class="process-num">01</span>
+            <h3 class="process-title" data-en="Data Acquisition" data-cn="数据采集">Data Acquisition</h3>
+            <p class="process-text" data-en="Digital intraoral scans or conventional impressions are received and converted into an accurate digital model." data-cn="接收口内扫描数据或传统印模，转化为精准的数字化模型。">Digital intraoral scans or conventional impressions are received and converted into an accurate digital model.</p>
+          </li>
+          <li class="process-step">
+            <span class="process-num">02</span>
+            <h3 class="process-title" data-en="Digital Design" data-cn="数字设计">Digital Design</h3>
+            <p class="process-text" data-en="Restorations are designed in CAD with attention to occlusion, contact points and aesthetic detail." data-cn="在 CAD 环境中完成修复体设计，兼顾咬合、邻接与美学细节。">Restorations are designed in CAD with attention to occlusion, contact points and aesthetic detail.</p>
+          </li>
+          <li class="process-step">
+            <span class="process-num">03</span>
+            <h3 class="process-title" data-en="Digital Manufacturing" data-cn="数字加工">Digital Manufacturing</h3>
+            <p class="process-text" data-en="Milling and 3D printing turn the design into a physical restoration, supported by automated production lines." data-cn="通过切削与 3D 打印将设计转化为实体修复体，并由自动化产线承接。">Milling and 3D printing turn the design into a physical restoration, supported by automated production lines.</p>
+          </li>
+          <li class="process-step">
+            <span class="process-num">04</span>
+            <h3 class="process-title" data-en="Clinical Delivery" data-cn="临床应用">Clinical Delivery</h3>
+            <p class="process-text" data-en="Each finished piece is inspected before shipping, then tried in at the clinic for fit and occlusion." data-cn="成品检验后出库，在临床端完成试戴与咬合确认。">Each finished piece is inspected before shipping, then tried in at the clinic for fit and occlusion.</p>
+          </li>
+        </ol>
+
+        <p class="process-note cn-only" data-en="Demo note: step names and descriptions follow the industry-standard four-step flow — to be checked against the company's actual production process." data-cn="演示说明：步骤名称与描述采用行业通用四步流程，需按公司实际生产流程核对。">演示说明：步骤名称与描述采用行业通用四步流程，需按公司实际生产流程核对。</p>
+      </div>
+    </section>
+
+    <!-- ========== 05 · Technology / Manufacturing ========== -->
+    <section class="technology" id="technology">
+      <div class="container">
+        <div class="section-head section-head--left">
+          <span class="section-eyebrow" data-en="DIGITAL MANUFACTURING" data-cn="数字化智造">DIGITAL MANUFACTURING</span>
+          <h2 class="section-title" data-en="Where precision meets automation." data-cn="精密智造，自动化未来。">Where precision meets automation.</h2>
+          <p class="section-lede" data-en="As a high-tech enterprise, we stay at the forefront of global advancements in digital dentistry — actively embracing smart manufacturing of digital dental prosthetics." data-cn="作为一家高新技术企业，我们紧跟全球口腔数字化发展步伐，专注于数字化义齿智能制造方向。">As a high-tech enterprise, we stay at the forefront of global advancements in digital dentistry — actively embracing smart manufacturing of digital dental prosthetics.</p>
+        </div>
+
+        <div class="tech-feature">
+          <div class="tech-feature-media" aria-hidden="true">
+            <div class="tech-feature-canvas">
+              <div class="orbit orbit-1"></div>
+              <div class="orbit orbit-2"></div>
+              <div class="orbit orbit-3"></div>
+              <div class="orbit-center"></div>
+            </div>
+          </div>
+          <div class="tech-feature-body">
+            <span class="tech-feature-tag" data-en="LIGHTS-OUT FACTORY" data-cn="黑灯工厂">LIGHTS-OUT FACTORY</span>
+            <h3 class="tech-feature-title" data-en="Automation that never sleeps." data-cn="自动化，永不停歇。">Automation that never sleeps.</h3>
+            <p class="tech-feature-text" data-en="Our lights-out production lines run 24/7 with minimal human intervention — combining robotics, machine vision, and AI-driven quality control to deliver consistent precision at scale." data-cn="黑灯生产线 24 小时不间断运行，最小化人工干预——结合机器人、机器视觉和 AI 质量控制，在规模化生产中保持始终如一的精度。">Our lights-out production lines run 24/7 with minimal human intervention — combining robotics, machine vision, and AI-driven quality control to deliver consistent precision at scale.</p>
+          </div>
+        </div>
+
+        <div class="tech-secondary">
+          <div class="tech-card">
+            <div class="tech-card-icon" aria-hidden="true">▣</div>
+            <h4 data-en="Dentsply Sirona Digital Printing Center" data-cn="登士柏西诺德数字化打印中心">Dentsply Sirona Digital Printing Center</h4>
+            <p data-en="Recognized as a One-Stop Digital Printing Center by Dentsply Sirona — a global leader in dental products and technologies." data-cn="被登士柏西诺德认定为"一站式数字化打印中心"——全球口腔产品与技术领导者。">Recognized as a One-Stop Digital Printing Center by Dentsply Sirona — a global leader in dental products and technologies.</p>
+          </div>
+          <div class="tech-card">
+            <div class="tech-card-icon" aria-hidden="true">◈</div>
+            <h4 data-en="Digital Aesthetics Center" data-cn="数字美学共享中心">Digital Aesthetics Center</h4>
+            <p data-en="Strategic partnership for digital aesthetic design — combining artistry and engineering for natural-looking restorations." data-cn="数字美学战略合作——将艺术美感与工程精度结合，打造自然逼真的修复体。">Strategic partnership for digital aesthetic design — combining artistry and engineering for natural-looking restorations.</p>
+          </div>
+        </div>
+
+        <!-- Video Feature -->
+        <div class="tech-video reveal">
+          <div class="tech-video-head">
+            <h3 class="tech-video-title" data-en="Every piece, under control." data-cn="每一件，皆在掌控。">Every piece, under control.</h3>
+          </div>
+
+          <div class="video-frame" id="video-frame">
+            <video
+              class="video-el"
+              id="quality-video"
+              poster="assets/video/poster.jpg"
+              preload="none"
+              playsinline
+            >
+              <source src="assets/video/exceldent-quality-1080p.mp4" type="video/mp4" />
+            </video>
+
+            <button class="video-cover" id="video-cover" type="button" aria-label="Play video">
+              <span class="video-cover-glow" aria-hidden="true"></span>
+              <span class="video-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
+              <span class="video-cover-text">
+                <span class="video-cover-eyebrow" data-en="EXCELDENT · QUALITY" data-cn="EXCELDENT · 品质篇">EXCELDENT · QUALITY</span>
+                <span class="video-cover-title" data-en="Inside Our Craft" data-cn="走进我们的工艺">Inside Our Craft</span>
+                <span class="video-cover-meta" data-en="Click to play" data-cn="点击播放">Click to play</span>
+              </span>
+            </button>
+
+            <div class="video-loading" id="video-loading" aria-hidden="true">
+              <span class="video-spinner"></span>
+              <span class="video-loading-text" data-en="Loading video…" data-cn="视频加载中…">Loading video…</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 06 · Partners ========== -->
+    <section class="partners" id="partners">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-en="GLOBAL PARTNERS" data-cn="全球伙伴">GLOBAL PARTNERS</span>
+          <h2 class="section-title" data-en="Trusted by industry leaders." data-cn="全球行业领袖的选择。">Trusted by industry leaders.</h2>
+        </div>
+      </div>
+
+      <!-- Marquee -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="marquee-item">ARGEN</span>
+          <span class="marquee-item">Ivoclar</span>
+          <span class="marquee-item">Aidite</span>
+          <span class="marquee-item">Dentsply Sirona</span>
+          <span class="marquee-item">TCS</span>
+          <span class="marquee-item">VITA</span>
+          <span class="marquee-item">Wieland</span>
+          <span class="marquee-item">Zhermack</span>
+          <span class="marquee-item">GCI</span>
+          <span class="marquee-item">Inveron</span>
+          <span class="marquee-item">Dreve</span>
+          <span class="marquee-item">YAMAHACHI</span>
+          <span class="marquee-item">BEGO</span>
+          <span class="marquee-item">CHAMULON</span>
+          <span class="marquee-item">中航翔通</span>
+          <span class="marquee-item">CEKA PRECI-LINE</span>
+          <span class="marquee-item">Renfert</span>
+          <span class="marquee-item">Valplast</span>
+          <span class="marquee-item">Lava™</span>
+          <span class="marquee-item">DENTALIUM</span>
+          <span class="marquee-item">椅邦</span>
+          <!-- duplicate for seamless loop -->
+          <span class="marquee-item">ARGEN</span>
+          <span class="marquee-item">Ivoclar</span>
+          <span class="marquee-item">Aidite</span>
+          <span class="marquee-item">Dentsply Sirona</span>
+          <span class="marquee-item">TCS</span>
+          <span class="marquee-item">VITA</span>
+          <span class="marquee-item">Wieland</span>
+          <span class="marquee-item">Zhermack</span>
+          <span class="marquee-item">GCI</span>
+          <span class="marquee-item">Inveron</span>
+          <span class="marquee-item">Dreve</span>
+          <span class="marquee-item">YAMAHACHI</span>
+          <span class="marquee-item">BEGO</span>
+          <span class="marquee-item">CHAMULON</span>
+          <span class="marquee-item">中航翔通</span>
+          <span class="marquee-item">CEKA PRECI-LINE</span>
+          <span class="marquee-item">Renfert</span>
+          <span class="marquee-item">Valplast</span>
+          <span class="marquee-item">Lava™</span>
+          <span class="marquee-item">DENTALIUM</span>
+          <span class="marquee-item">椅邦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 07 · Culture ========== -->
+    <section class="culture" id="culture">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-eyebrow" data-en="MISSION · VISION · VALUES" data-cn="使命 · 愿景 · 价值观">MISSION · VISION · VALUES</span>
+          <h2 class="section-title" data-en="What drives us forward." data-cn="驱动我们前行的力量。">What drives us forward.</h2>
+        </div>
+
+        <div class="culture-grid">
+          <article class="culture-card culture-card--mission">
+            <span class="culture-label" data-en="MISSION" data-cn="企业使命">MISSION</span>
+            <h3 class="culture-title" data-en="Customer-Oriented and Quality-Focused" data-cn="以客户为导向，以质量为核心">Customer-Oriented and Quality-Focused</h3>
+            <p class="culture-text" data-en="We focus on solving dentists' challenges by providing accurate, perfectly fitting prosthetics that ensure easy try-ins, minimize chair time, and reduce adjustments." data-cn="我们致力于解决牙医的痛点，通过提供精准、美契合的修复体，确保试戴顺利、减少椅旁时间、减少调整。">We focus on solving dentists' challenges by providing accurate, perfectly fitting prosthetics that ensure easy try-ins, minimize chair time, and reduce adjustments.</p>
+          </article>
+
+          <article class="culture-card culture-card--vision">
+            <span class="culture-label" data-en="VISION" data-cn="企业愿景">VISION</span>
+            <h3 class="culture-title" data-en="Driving innovation, setting standards." data-cn="以创新推动行业，以品质树立标杆。">Driving innovation, setting standards.</h3>
+            <p class="culture-text" data-en="Driving innovation in the dental industry, setting new benchmarks for quality, and bringing confidence and beautiful smiles to people worldwide." data-cn="以创新推动口腔行业发展，以品质树立行业新标杆，为人类带来自信与美丽笑容。">Driving innovation in the dental industry, setting new benchmarks for quality, and bringing confidence and beautiful smiles to people worldwide.</p>
+          </article>
+
+          <article class="culture-card culture-card--values">
+            <span class="culture-label" data-en="VALUES" data-cn="企业价值观">VALUES</span>
+            <h3 class="culture-title" data-en="Dedication · Perseverance · Synergy · Innovation" data-cn="敬业 · 奋进 · 和谐 · 创新">Dedication · Perseverance · Synergy · Innovation</h3>
+            <p class="culture-text" data-en="Committed to innovation and quality. With this focus on practical solutions and unmatched customer satisfaction, we continue to lead the delivery of advanced dental solutions worldwide." data-cn="致力于创新与质量。聚焦实际解决方案与客户满意度，持续引领全球先进牙科解决方案的交付。">Committed to innovation and quality. With this focus on practical solutions and unmatched customer satisfaction, we continue to lead the delivery of advanced dental solutions worldwide.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 08 · Contact ========== -->
+    <section class="contact" id="contact">
+      <div class="container contact-inner">
+        <div class="contact-head">
+          <span class="section-eyebrow" data-en="GET IN TOUCH" data-cn="联系我们">GET IN TOUCH</span>
+          <h2 class="section-title" data-en="Let's build the future of dental care." data-cn="携手共创口腔未来。">Let's build the future of dental care.</h2>
+          <p class="section-lede" data-en="Whether you're a dental clinic, distributor, or brand partner — we'd love to hear from you." data-cn="无论您是牙科诊所、经销商还是品牌合作方，我们都期待与您联系。">Whether you're a dental clinic, distributor, or brand partner — we'd love to hear from you.</p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-info">
+            <div class="info-block">
+              <div class="info-label" data-en="VISIT" data-cn="到访">VISIT</div>
+              <div class="info-value" data-en="Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China" data-cn="广东省珠海市金湾区康德莱国际医疗产业园">Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China</div>
+            </div>
+            <div class="info-block">
+              <div class="info-label" data-en="PHONE" data-cn="电话">PHONE</div>
+              <div class="info-value info-value--placeholder" data-en="To be provided" data-cn="待补充">To be provided</div>
+            </div>
+            <div class="info-block">
+              <div class="info-label" data-en="EMAIL" data-cn="邮箱">EMAIL</div>
+              <div class="info-value info-value--placeholder" data-en="To be provided" data-cn="待补充">To be provided</div>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="cf-name" data-en="Your Name" data-cn="您的姓名">Your Name</label>
+                <input type="text" id="cf-name" name="name" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="cf-email" data-en="Email" data-cn="邮箱">Email</label>
+                <input type="email" id="cf-email" name="email" autocomplete="email" required />
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="cf-company" data-en="Company / Clinic" data-cn="公司 / 诊所">Company / Clinic</label>
+              <input type="text" id="cf-company" name="company" />
+            </div>
+            <div class="form-field">
+              <label for="cf-interest" data-en="I'm interested in" data-cn="我对以下感兴趣">I'm interested in</label>
+              <select id="cf-interest" name="interest">
+                <option data-en="Fixed Restorations" data-cn="固定修复体">Fixed Restorations</option>
+                <option data-en="Removable Dentures" data-cn="活动可摘义齿">Removable Dentures</option>
+                <option data-en="Orthodontic Products" data-cn="正畸产品">Orthodontic Products</option>
+                <option data-en="Distribution Partnership" data-cn="经销合作">Distribution Partnership</option>
+                <option data-en="Other" data-cn="其他">Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="cf-msg" data-en="Message" data-cn="留言">Message</label>
+              <textarea id="cf-msg" name="message" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <span class="btn-label" data-en="Send Inquiry" data-cn="发送询单">Send Inquiry</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </button>
+            <p class="form-note" data-en="* This is a model site. The form is not yet wired to a backend." data-cn="* 当前为模型站点，表单尚未对接后端。">* This is a model site. The form is not yet wired to a backend.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== Footer ========== -->
+  <footer class="site-footer">
+    <div class="container">
+
+      <div class="footer-top">
+
+        <!-- Brand -->
+        <div class="footer-col footer-col--brand">
+          <div class="footer-brand">
+            <span class="logo-mark" aria-hidden="true">
+              <img src="assets/brand/diamond-logo.png" alt="" width="30" height="29" />
+            </span>
+            <div>
+              <div class="footer-name">EXCELDENT</div>
+              <div class="footer-sub" data-en="Dental Lab — Established 2019" data-cn="口腔实验室 — 始于 2019">Dental Lab — Established 2019</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <nav class="footer-col" aria-label="Products">
+          <h4 class="footer-heading" data-en="Products" data-cn="产品">Products</h4>
+          <ul class="footer-links">
+            <li><a href="product.html?line=fixed" data-en="Fixed Restorations" data-cn="固定修复体">Fixed Restorations</a></li>
+            <li><a href="product.html?line=removable" data-en="Removable Dentures" data-cn="活动可摘义齿">Removable Dentures</a></li>
+            <li><a href="product.html?line=ortho" data-en="Orthodontic" data-cn="正畸产品线">Orthodontic</a></li>
+          </ul>
+        </nav>
+
+        <!-- Company -->
+        <nav class="footer-col" aria-label="Company">
+          <h4 class="footer-heading" data-en="Company" data-cn="关于">Company</h4>
+          <ul class="footer-links">
+            <li><a href="about.html" data-en="About Us" data-cn="企业简介">About Us</a></li>
+            <li><a href="#technology" data-en="Technology" data-cn="智造实力">Technology</a></li>
+            <li><a href="#partners" data-en="Partners" data-cn="合作伙伴">Partners</a></li>
+            <li><a href="#culture" data-en="Culture" data-cn="企业文化">Culture</a></li>
+          </ul>
+        </nav>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4 class="footer-heading" data-en="Get in Touch" data-cn="联系我们">Get in Touch</h4>
+          <ul class="footer-links">
+            <li><a href="#contact" data-en="Send an Inquiry" data-cn="发送询单">Send an Inquiry</a></li>
+          </ul>
+          <p class="footer-address" data-en="Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China" data-cn="广东省珠海市金湾区康德莱国际医疗产业园">Kangdelai International Medical Industrial Park, Jinwan District, Zhuhai, Guangdong, China</p>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-text" data-en="© 2026 EXCELDENT Dental Technology Development Co., Ltd." data-cn="© 2026 珠海优里卡齿科技术开发有限公司">© 2026 EXCELDENT Dental Technology Development Co., Ltd.</div>
+        <button class="footer-top-btn" id="footer-top-btn" type="button">
+          <span data-en="Back to top" data-cn="返回顶部">Back to top</span>
+          <span class="footer-top-arrow" aria-hidden="true">↑</span>
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
