@@ -290,6 +290,8 @@ html[data-lang="en"] .cn-only { display: none; }
   max-width: 980px;
 }
 .hero-eyebrow {
+  position: relative;
+  top: 36px; /* 下移让出背景楼顶 EXCELDENT 字样（纯视觉偏移，不动布局） */
   display: inline-flex;
   align-items: center;
   gap: 10px;
