@@ -234,15 +234,15 @@ html[data-lang="en"] .cn-only { display: none; }
   pointer-events: none;
 }
 
-/* Hero 背景层：真实影像 + 深蓝遮罩
-   遮罩取「中」档 —— 深蓝渐变 .95/.86/.70 + 右上蓝 radial；取景偏下（center 58%）；不叠网格层
-   实测标题对比度 13.1:1（WCAG 大字要求 3.0），底图右侧保留约 30% 可见度 */
+/* Hero 背景层：园区实景（EXCELDENT 厂房正面）+ 深蓝遮罩
+   遮罩沿用「中」档 —— 深蓝渐变 .95/.86/.70 + 右上蓝 radial；不叠网格层
+   取景 center 45%：楼体与顶部 EXCELDENT 标志完整入画，蓝天在上作呼吸空间 */
 .hero-photo {
   position: absolute;
   inset: 0;
-  background-image: url("assets/video/poster.jpg");
+  background-image: url("assets/hero/exceldent-hq.jpg");
   background-size: cover;
-  background-position: center 58%;
+  background-position: center 45%;
   transform: scale(1.04);
 }
 .hero-veil {
@@ -1897,4 +1897,194 @@ body.menu-open { overflow: hidden; }
   .footer-top { grid-template-columns: 1fr; gap: 32px; }
   .footer-col--brand { padding-right: 0; }
   .footer-bottom { margin-top: 40px; }
+}
+
+/* ================================================================
+   产品页 v2：子类分组 + 吸顶导航 + 详情参数浮层
+   ================================================================ */
+
+/* ---- 吸顶分类导航（top 与 72px 头部对齐） ---- */
+.cat-nav {
+  position: sticky;
+  top: 72px;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+.cat-nav-in {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.cat-nav-in::-webkit-scrollbar { display: none; }
+.cat-nav a {
+  flex: 0 0 auto;
+  padding: 15px 14px;
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  white-space: nowrap;
+}
+.cat-nav a:hover { color: var(--navy-900); border-bottom-color: rgba(242, 107, 58, 0.45); }
+.cat-nav a b { font-weight: 600; color: var(--navy-900); }
+.cat-nav a span { font-size: 12px; opacity: 0.55; margin-left: 6px; font-variant-numeric: tabular-nums; }
+
+/* ---- 子类分组 ---- */
+.cat-block { padding-top: 56px; scroll-margin-top: 128px; }
+.cat-block:first-child { padding-top: 0; }
+.cat-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 10px; flex-wrap: wrap; }
+.cat-head h2 {
+  font-size: 26px;
+  letter-spacing: -0.01em;
+  color: var(--navy-900);
+  margin: 0;
+  font-weight: 650;
+}
+.cat-count {
+  font-size: 13px;
+  color: #fff;
+  background: var(--navy-900);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-variant-numeric: tabular-nums;
+}
+.cat-en { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.cat-desc { max-width: 760px; margin: 0 0 26px; font-size: 14.5px; line-height: 1.7; color: var(--muted); }
+
+/* ---- 卡片：简介可点 + 悬停态 ---- */
+.pd-summary {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  margin-top: 12px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  cursor: pointer;
+  border-radius: 6px;
+  transition: color 0.18s ease;
+}
+.pd-summary:hover { color: var(--ink); }
+.pd-summary:hover .sum-text {
+  text-decoration: underline;
+  text-decoration-color: rgba(242, 107, 58, 0.6);
+  text-underline-offset: 3px;
+}
+.pd-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #9A4A22;
+}
+.pd-more { cursor: pointer; }
+.pd-more .arw { transition: transform 0.18s ease; }
+.pd-item:hover .pd-more .arw { transform: translateX(3px); }
+.pd-item.is-open {
+  border-color: rgba(242, 107, 58, 0.55);
+  box-shadow: 0 12px 30px rgba(16, 32, 72, 0.10);
+}
+
+/* ---- 详情参数浮层 ---- */
+.dt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: rgba(10, 31, 68, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  overflow-y: auto;
+  padding: 40px 16px;
+  font-family: var(--font-sans, -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif);
+}
+.dt-overlay.on { display: block; }
+.dt-panel {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+  animation: dtIn 0.22s ease-out;
+}
+@keyframes dtIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.dt-hero {
+  background: var(--navy-900);
+  color: #fff;
+  padding: 34px 42px 30px;
+  position: relative;
+}
+.dt-crumb { font-size: 12.5px; opacity: 0.6; margin-bottom: 12px; letter-spacing: 0.04em; }
+.dt-hero h2 { margin: 0; font-size: 28px; letter-spacing: -0.02em; }
+.dt-sub { margin: 7px 0 0; opacity: 0.7; font-size: 13.5px; }
+.dt-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.dt-chips span {
+  font-size: 12px;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.dt-body { padding: 30px 42px 40px; }
+.dt-langnote {
+  background: #FFF4EE;
+  border-left: 3px solid #F26B3A;
+  padding: 11px 15px;
+  margin-bottom: 26px;
+  border-radius: 0 8px 8px 0;
+  font-size: 13px;
+  color: #8A4A26;
+}
+.dt-sec { margin-bottom: 26px; }
+.dt-sec:last-child { margin-bottom: 0; }
+.dt-sec h3 {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #F26B3A;
+  margin: 0 0 11px;
+  font-weight: 700;
+}
+.dt-sec ul { margin: 0; padding-left: 18px; color: #33415C; font-size: 14px; line-height: 1.8; }
+.dt-sec p { margin: 0; color: #33415C; font-size: 14px; line-height: 1.8; }
+.dt-sec li { margin-bottom: 4px; }
+.dt-close {
+  position: absolute;
+  top: 18px; right: 20px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  width: 34px; height: 34px;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+.dt-close:hover { background: rgba(255, 255, 255, 0.26); }
+
+@media (max-width: 960px) {
+  .pd-grid { grid-template-columns: 1fr; }
+  .dt-body { padding: 24px 20px 32px; }
+  .dt-hero { padding: 28px 20px; }
+  .cat-nav { top: 64px; }
+  .cat-block { padding-top: 44px; }
 }

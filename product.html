@@ -78,12 +78,11 @@
       </div>
     </section>
 
-    <!-- ========== 产品条目 ========== -->
+    <!-- ========== 产品条目（按子类分组 + 吸顶导航 + 详情浮层） ========== -->
     <section class="pd-main">
+      <div class="cat-nav"><div class="cat-nav-in" id="cat-nav"></div></div>
       <div class="container">
-        <div class="pd-note cn-only" data-en="Demo note: the descriptions below are placeholder copy for this draft — photos and detailed specs will be added once materials are confirmed." data-cn="演示说明：以下产品描述为雏形占位文案，产品实拍图与详细参数待公司资料确认后补充。">演示说明：以下产品描述为雏形占位文案，产品实拍图与详细参数待公司资料确认后补充。</div>
-
-        <ul class="pd-grid" id="pd-items"><!-- JS 注入 --></ul>
+        <div id="pd-body"><!-- JS 注入 --></div>
       </div>
     </section>
 
@@ -154,6 +153,20 @@
       </div>
     </div>
   </footer>
+
+  <!-- ========== 详情参数浮层（先于脚本，product.js 初始化时要用） ========== -->
+  <div class="dt-overlay" id="dt-overlay">
+    <div class="dt-panel">
+      <div class="dt-hero">
+        <button class="dt-close" id="dt-close" aria-label="Close">×</button>
+        <div class="dt-crumb" id="dt-crumb"></div>
+        <h2 id="dt-title"></h2>
+        <p class="dt-sub" id="dt-sub"></p>
+        <div class="dt-chips" id="dt-chips"></div>
+      </div>
+      <div class="dt-body" id="dt-body"></div>
+    </div>
+  </div>
 
   <script src="page.js"></script>
   <script src="product.js"></script>
