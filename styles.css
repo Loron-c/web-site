@@ -2098,3 +2098,9 @@ body.menu-open { overflow: hidden; }
     inset 0 -1px 0 0 hsl(0 0% 100% / 0.1),
     0 4px 16px rgba(4, 12, 34, 0.22);
 }
+
+/* 玻璃按钮悬停提亮（glass-on 定义在后，会盖掉 btn-ghost:hover 的背景变化） */
+[data-glass].glass-on:hover {
+  background: hsl(0 0% 100% / calc(0.1 + var(--glass-frost, 0) * 0.6));
+  border-color: transparent;
+}
