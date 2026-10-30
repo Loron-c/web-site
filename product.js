@@ -429,8 +429,7 @@
   /* ---------- 吸顶分类导航 ---------- */
   function renderCatNav() {
     $('#cat-nav').innerHTML = groupsOf(line).map(function (g) {
-      return '<a href="#cat-' + g + '"><b>' + esc(GROUPS[g][lang()]) + '</b>' +
-             '<span>' + byGroup(g).length + '</span></a>';
+      return '<a href="#cat-' + g + '"><b>' + esc(GROUPS[g][lang()]) + '</b></a>';
     }).join('');
   }
 
@@ -438,19 +437,13 @@
   function cardHTML(p, i) {
     var g = GROUPS[p.g];
     return '' +
-      '<li class="pd-item" data-id="' + p.id + '">' +
+      '<li class="pd-item" data-id="' + p.id + '" tabindex="0" role="button" aria-label="' + esc(L({ cn: '查看详细参数', en: 'View specifications' })) + '">' +
         '<div class="pd-ph" aria-hidden="true"><span class="ph-mark">' + esc(g[lang()]) + '</span></div>' +
         '<div class="pd-body">' +
           '<span class="pd-item-num">' + pad(i) + '</span>' +
           '<h3 class="pd-item-title">' + esc(p[lang()]) + '</h3>' +
           '<span class="mat-badge">' + esc(g[lang()]) + '</span>' +
-          '<button class="pd-summary" type="button" aria-label="' + esc(L({ cn: '查看详细参数', en: 'View specifications' })) + '">' +
-            '<span class="sum-text">' + esc(lang() === 'cn' ? p.oCn : p.oEn) + '</span>' +
-          '</button>' +
-          '<span class="pd-more">' +
-            esc(p.empty ? { cn: '查看详细参数 · 待补充', en: 'Specs pending' } : { cn: '查看详细参数', en: 'View specifications' }) +
-            '<span class="arw" aria-hidden="true">→</span>' +
-          '</span>' +
+          '<p class="pd-summary"><span class="sum-text">' + esc(lang() === 'cn' ? p.oCn : p.oEn) + '</span></p>' +
         '</div>' +
       '</li>';
   }
@@ -474,9 +467,11 @@
 
     $$('#pd-body .pd-item').forEach(function (li) {
       var p = P.filter(function (x) { return x.id === li.dataset.id; })[0];
-      var open = function () { openDetail(p, li); };
-      li.querySelector('.pd-summary').addEventListener('click', open);
-      li.querySelector('.pd-more').addEventListener('click', open);
+      /* 整卡可点：点击或回车打开详情浮层 */
+      li.addEventListener('click', function () { openDetail(p, li); });
+      li.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(p, li); }
+      });
     });
   }
 
