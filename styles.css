@@ -236,13 +236,13 @@ html[data-lang="en"] .cn-only { display: none; }
 
 /* Hero 背景层：园区实景（EXCELDENT 厂房正面）+ 深蓝遮罩
    遮罩沿用「中」档 —— 深蓝渐变 .95/.86/.70 + 右上蓝 radial；不叠网格层
-   取景 center 45%：楼体与顶部 EXCELDENT 标志完整入画，蓝天在上作呼吸空间 */
+   取景 center bottom：楼顶 EXCELDENT 标志升至标题上方空档，不被文字压住 */
 .hero-photo {
   position: absolute;
   inset: 0;
   background-image: url("assets/hero/exceldent-hq.jpg");
   background-size: cover;
-  background-position: center 45%;
+  background-position: center bottom;
   transform: scale(1.04);
 }
 .hero-veil {
