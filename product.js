@@ -490,11 +490,6 @@
     }).join('');
 
     var body = '';
-    if (lang() === 'en') {
-      body += '<div class="dt-langnote">' +
-        'Technical parameters below are currently provided in Chinese; the English version is pending translation.' +
-        '</div>';
-    }
     (p.secs || []).forEach(function (s) {
       var k = s[0], items = s[1];
       var h = SEC[k] || ['', ''];

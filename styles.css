@@ -2028,15 +2028,6 @@ body.menu-open { overflow: hidden; }
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .dt-body { padding: 30px 42px 40px; }
-.dt-langnote {
-  background: #FFF4EE;
-  border-left: 3px solid #F26B3A;
-  padding: 11px 15px;
-  margin-bottom: 26px;
-  border-radius: 0 8px 8px 0;
-  font-size: 13px;
-  color: #8A4A26;
-}
 .dt-sec { margin-bottom: 26px; }
 .dt-sec:last-child { margin-bottom: 0; }
 .dt-sec h3 {
