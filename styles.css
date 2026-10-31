@@ -1085,13 +1085,17 @@ a.product-card { cursor: pointer; }
   position: absolute;
   inset: 0;
   padding: 40px;
-  background: radial-gradient(130% 130% at 18% 10%, #17345F 0%, var(--navy-900) 58%, #06173A 100%);
+  /* 关于我们：直接透出版头的航拍背景，只做极淡垫底保证副标题可读 */
+  background: rgba(10, 31, 68, 0.22);
 }
 .as-face--profile {
   display: flex;
   align-items: center;
   padding: 52px 58px;
-  background: radial-gradient(130% 130% at 82% 12%, #38211A 0%, var(--navy-900) 56%, #06173A 100%);
+  /* 公司简介：淡品牌蓝纯色（弃用原先的暖色渐变）；轻磨砂柔化底图，不留彩色边缘 */
+  background: rgba(31, 70, 144, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 .as-face--center {
   display: flex;
