@@ -1092,10 +1092,8 @@ a.product-card { cursor: pointer; }
   display: flex;
   align-items: center;
   padding: 52px 58px;
-  /* 公司简介：淡品牌蓝纯色（弃用原先的暖色渐变）。
-     注意：这里不要加 backdrop-filter — PixelSwap 会把整层克隆进上百个像素块，
-     等于同时跑上百个背景模糊，收尾阶段会明显掉帧。 */
-  background: rgba(31, 70, 144, 0.72);
+  /* 与「关于我们」层保持一致：同样直接透出航拍背景，不做额外填充。
+     注：本层会被 PixelSwap 克隆进上百个像素块，这里也不要加 backdrop-filter。 */
 }
 .as-face--center {
   display: flex;
