@@ -2097,3 +2097,17 @@ body.menu-open { overflow: hidden; }
   background: hsl(0 0% 100% / calc(0.1 + var(--glass-frost, 0) * 0.6));
   border-color: transparent;
 }
+
+/* ---- 产品页版头背景：展厅实景 + 深蓝遮罩（替代原网格+光晕） ---- */
+.pd-hero-photo {
+  position: absolute;
+  inset: 0;
+  background: url("assets/hero/showroom.jpg") center / cover no-repeat;
+}
+.pd-hero-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 90% at 78% 10%, rgba(31, 70, 144, 0.35) 0%, transparent 70%),
+    linear-gradient(180deg, rgba(10, 31, 68, 0.94) 0%, rgba(10, 31, 68, 0.82) 45%, rgba(10, 31, 68, 0.55) 100%);
+}
