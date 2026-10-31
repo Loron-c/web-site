@@ -145,7 +145,7 @@
     };
 
     var layers = container.querySelectorAll('.pixel-swap__layer');
-    var desired = false, transitioning = false, animations = [], pixelEls = [], timer = 0;
+    var desired = false, transitioning = false, animations = [], pixelEls = [], timer = 0, runSeq = 0;
 
     function setState(next) {
       for (var i = 0; i < layers.length; i += 1) layers[i].dataset.visible = String(i === (next ? 1 : 0));
@@ -160,6 +160,11 @@
 
     function run(to) {
       if (transitioning) stopAnimations();
+      // 打断场景可能留下多张未收尾的像素网格，先全部拆干净再建新的
+      var stale = container.querySelectorAll('.pixel-swap__grid');
+      for (var s = 0; s < stale.length; s += 1) stale[s].remove();
+      runSeq += 1;
+      var myRun = runSeq;
 
       var width = container.clientWidth, height = container.clientHeight;
       var grid = buildGrid({
@@ -169,12 +174,27 @@
         pattern: cfg.pattern, randomness: cfg.randomness
       });
 
-      var finish = function () {
-        stopAnimations();
+      function finish() {
         setState(to);
         transitioning = false;
-        var g = container.querySelector('.pixel-swap__grid');
-        if (g) g.remove();
+        if (timer) { window.clearTimeout(timer); timer = 0; }
+        // 重活（cancel 上百条动画 + 拆掉整张像素网格）放到下一帧，
+        // 让最后一批像素先在屏幕上真正合成完成，避免收尾时的顿挫
+        var dying = animations.splice(0, animations.length);
+        var deadEls = pixelEls.splice(0, pixelEls.length);
+        var deadGrids = container.querySelectorAll('.pixel-swap__grid');
+        window.requestAnimationFrame(function () {
+          for (var i = 0; i < dying.length; i += 1) { try { dying[i].cancel(); } catch (e) { /* 已结算 */ } }
+          for (var j = 0; j < deadEls.length; j += 1) deadEls[j].replaceChildren();
+          for (var k = 0; k < deadGrids.length; k += 1) deadGrids[k].remove();
+        });
+      }
+
+      // 收尾以「最后一条动画真正结束」为准；setTimeout 只作兜底，
+      // 避免动画时钟与定时器错位导致最后一批像素被提前 cancel / 移除（观感上末尾顿一下）
+      var finishOnce = function () {
+        if (myRun !== runSeq) return; // 已被新的切换接管，不再收尾
+        finish();
       };
 
       var source = layers[to ? 1 : 0];
@@ -230,7 +250,14 @@
       });
 
       container.appendChild(gridEl);
-      timer = window.setTimeout(finish, total);
+
+      // 优先等动画自身结算完毕；setTimeout 延后一档作为兜底（finished 不可用时仍能收尾）
+      var pending = [];
+      animations.forEach(function (a) { if (a && a.finished) pending.push(a.finished); });
+      if (pending.length && Promise.allSettled) {
+        Promise.allSettled(pending).then(finishOnce, finishOnce);
+      }
+      timer = window.setTimeout(finishOnce, total + 220);
     }
 
     function request(next) {

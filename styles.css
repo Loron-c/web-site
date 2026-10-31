@@ -1092,10 +1092,10 @@ a.product-card { cursor: pointer; }
   display: flex;
   align-items: center;
   padding: 52px 58px;
-  /* 公司简介：淡品牌蓝纯色（弃用原先的暖色渐变）；轻磨砂柔化底图，不留彩色边缘 */
-  background: rgba(31, 70, 144, 0.62);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  /* 公司简介：淡品牌蓝纯色（弃用原先的暖色渐变）。
+     注意：这里不要加 backdrop-filter — PixelSwap 会把整层克隆进上百个像素块，
+     等于同时跑上百个背景模糊，收尾阶段会明显掉帧。 */
+  background: rgba(31, 70, 144, 0.72);
 }
 .as-face--center {
   display: flex;
