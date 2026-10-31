@@ -2102,7 +2102,7 @@ body.menu-open { overflow: hidden; }
 .pd-hero-photo {
   position: absolute;
   inset: 0;
-  background: url("assets/hero/showroom.jpg") center 70% / auto 132% no-repeat;
+  background: url("assets/hero/showroom.jpg") center 30% / auto 132% no-repeat;
 }
 .pd-hero-veil {
   position: absolute;
