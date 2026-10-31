@@ -68,13 +68,20 @@
   render(window.SITE.getLang());
 
   window.PixelSwap(swap, {
-    pixelSize: 76,
+    // 颗粒 112px：约 11×5＝55 块。每块都内含一整层内容的克隆，
+    // 所以每帧要合成的层数才是性能瓶颈（不是时长——降速实测缩短总时长反而更卡）。
+    // 76px(120块) 在 CPU 降速 6x 下尾段掉帧约 17 帧；112px(55块) 实测尾段掉帧 0、最差帧 33ms。
+    pixelSize: 112,
     gap: 0,
     pixelRadius: 0,
     pixelSpin: 0,
     pixelScale: 0.35,
-    duration: 1300,
-    pixelDuration: 480,
+    duration: 1000,
+    // 每颗像素自身的生长时间：收得短一些，避免末端长时间“几乎不动地挂着”的拖沓感
+    // （颗粒大小 76px、随机出场顺序均未改动）
+    // 注意两者的联动：每颗像素的出场延迟上限 = duration - pixelDuration，
+    // 所以缩短总时长会自动压紧出场间隔，不用单独调 delay。
+    pixelDuration: 300,
     pattern: 'random',
     randomness: 0,
     fade: true,
