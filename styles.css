@@ -2104,6 +2104,12 @@ body.menu-open { overflow: hidden; }
   inset: 0;
   background: url("assets/hero/showroom.jpg") center 15% / auto 132% no-repeat;
 }
+/* ---- 关于我们版头：沿用实景 photo + veil，图片取首版 hero 航拍珠海 ---- */
+.pd-hero-photo--aerial {
+  background-image: url("assets/video/poster.jpg");
+  background-position: center 45%;
+  background-size: cover;
+}
 .pd-hero-veil {
   position: absolute;
   inset: 0;
