@@ -121,6 +121,33 @@ html[data-lang="en"] .cn-only { display: none; }
   height: 72px;
   gap: 24px;
 }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--navy-900);
+}
+.logo-mark {
+  color: var(--orange);
+  display: inline-flex;
+}
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+.logo-name {
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  font-size: 16px;
+  color: var(--navy-900);
+}
+.logo-sub {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  color: var(--muted);
+  margin-top: 4px;
+}
 .nav-links {
   display: flex;
   align-items: center;
