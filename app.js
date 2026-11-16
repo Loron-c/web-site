@@ -71,8 +71,8 @@ const setLang = (lang) => {
     opt.classList.toggle('lang-active', opt.dataset.langOpt === lang);
   });
   document.title = lang === 'cn'
-    ? '优里卡齿科 — 高端定制义齿'
-    : 'EXCELDENT Dental Lab — High-End Custom Dental Prosthetics';
+    ? '个人作品集 · 企业官网概念设计'
+    : 'Portfolio · Dental Lab Website Concept';
 };
 langToggle.addEventListener('click', () => {
   const next = document.documentElement.getAttribute('data-lang') === 'en' ? 'cn' : 'en';
