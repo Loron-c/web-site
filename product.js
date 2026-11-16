@@ -429,8 +429,8 @@
     $('#pd-title').textContent = L(Ln.title);
     $('#pd-lede').textContent = L(Ln.lede);
     window.SITE.setTitle(
-      Ln.title.en + ' — EXCELDENT Dental Lab',
-      Ln.title.cn + ' — 优里卡齿科'
+      'Portfolio · ' + Ln.title.en + ' Product Line',
+      '个人作品集 · ' + Ln.title.cn + '产品线'
     );
   }
 
